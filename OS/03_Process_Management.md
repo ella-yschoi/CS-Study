@@ -749,6 +749,8 @@
 - 경우에 따라서는 프로세스간 협력이 필요함
 - 다른 프로세스의 메모리를 볼 수 없고, 상대 프로세스와 무언가를 주고받지는 못하기에, 아래와 같이 IPC에 따라 정보를 주고받으며 협력함
 
+<br/>
+
 ## 프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)
 
 <p align="center" width="100%"><img width="1010" alt="IPC" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/f9fa2ddb-8fcd-4c6d-909a-d8430741ff7f">
