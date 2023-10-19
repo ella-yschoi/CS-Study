@@ -749,37 +749,34 @@
 - 경우에 따라서는 프로세스간 협력이 필요함
 - 다른 프로세스의 메모리를 볼 수 없고, 상대 프로세스와 무언가를 주고받지는 못하기에, 아래와 같이 IPC에 따라 정보를 주고받으며 협력함
 
-### 프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)
+## 프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)
 
 <p align="center" width="100%"><img width="1010" alt="IPC" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/f9fa2ddb-8fcd-4c6d-909a-d8430741ff7f">
 
-#### (1) Message Passing (메시지 전달 방법)
+### (1) Message Passing (메시지 전달 방법)
 
-- 커널을 통해 메시지를 전달
-- 운영체제 커널에 메시지를 전달해서 다른 프로세스가 커널로부터 전달을 받는 방법 사용
+커널을 통해 메시지를 전달하며, 운영체제 커널에 메시지를 전달해서 다른 프로세스가 커널로부터 전달을 받는 방법 사용
 
-##### Message System
+#### Message System
 
-- 프로세스 사이에 공유 변수(shared variable)를 일체 사용하지 않고 통신하는 시스템
+프로세스 사이에 공유 변수(shared variable)를 일체 사용하지 않고 통신하는 시스템
 
-##### Direct Communication
+#### Direct Communication
+
+통신하려는 process의 이름을 명시적으로 표시하며, 메시지를 누구한테 보낼지를 명시하여 양자간에 합의된 명시적 메시지 전달 방식
 
 <p align="center" width="100%"><img width="1010" alt="Direct-Communication" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/7c8374c7-dc57-46ef-863a-e5002d71ccc2">
 
-- 통신하려는 process의 이름을 명시적으로 표시
-- 메시지를 누구한테 보낼지를 명시하여 양자간에 합의된 명시적 메시지 전달 방식
+#### Indirect Communication
 
-##### Indirect Communication
+mailbox (or port)를 통해 메시지를 간접 전달하며, 타겟을 명시하지 않고 전달하면 협력하는 프로세스 중 하나가 꺼내가도록 하는 방식
 
-<p align="center" width="100%"><img width="710" alt="Indirect-Communication" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/d1c4201a-1410-4d5f-963f-e3079cfacd80">
+<p align="center" width="100%"><img width="1010" alt="Indirect-Communication" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/d1c4201a-1410-4d5f-963f-e3079cfacd80">
 
-- mailbox (or port)를 통해 메시지를 간접 전달
-- 타겟을 명시하지 않고 전달하면, 협력하는 프로세스 중 하나가 꺼내가도록 하는 방식
-
-#### (2) Shared Memory (주소 공간을 공유하는 방법)
+### (2) Shared Memory (주소 공간을 공유하는 방법)
 
 - 서로 다른 프로세스 간에도 일부 주소 공간을 공유하게 하는 shraed memory 메커니즘이 있음
-- 서로 공유 운영체제에게 시스템 콜을 통해 부탁해서 메모리 일부를 공유하겠다고 함 → 메모리를 공유한다는 것은 서로 협력이 가능하다는 뜻
+- 서로 공유 운영체제에게 system call을 통해 부탁해 메모리 일부를 공유하겠다고 함(메모리를 공유한다는 것은 서로 협력이 가능하다는 뜻)
 - 단, 서로 신뢰할 수 있을 때만 공유해야 함
 - 참고) Thread
   - 스레드는 사실상 하나의 프로세스이므로 프로세스간 협력으로 보기에는 어렵지만, 동일한 프로세스를 구성하는 스레드들간에는 주소 공간을 공유하므로 협력이 가능
