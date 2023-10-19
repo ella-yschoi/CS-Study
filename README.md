@@ -51,6 +51,7 @@
 - [What is OS](/OS/01_What_is_OS.md)
 - [Computer System Structure](/OS/02_Computer_System_Structure.md)
 - [Process Management](/OS/03_Process_Management.md)
+- [CPU Scheduling](/OS/04_CPU_Scheduling.md)
 
 <br/>
 
