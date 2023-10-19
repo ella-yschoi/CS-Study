@@ -613,6 +613,8 @@
 - 운영체제가 thread 간의 CPU를 넘기는 작업을 할 수 없음
   - process 내부에서 운영체제에 비동기식 I/O를 요청해서 바로 다시 받아 다른 thread로 CPU를 넘기는 등 사용자 프로그램단에서 관리하는 것을 의미
 
+<br/>
+
 ## 프로세스 관리
 
 > 프로세스가 어떻게 만들어지고 종료되는가
@@ -701,3 +703,83 @@
   - 부모는 그냥 덮어 씌우는게 아니라 fork() 실행해 복제 후
   - 부모 자신은 원래 실행하던 프로그램 이어서 실행하고
   - 자식에게는 exec() 실행해 기존 프로그램 말고 다른 새로운 프로그램을 돌리게 함
+
+### wait() system call
+
+<p align="center" width="100%"><img width="1010" alt="wait-systemcall" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/20e424e8-8b68-49ab-9836-b1042bf670d3">
+
+- 프로세스 A가 wait() system call을 호출하면
+  - 커널은 child가 종료될 때까지 프로세스 A를 sleep시킨다 → block 상태
+  - Child process가 종료되면 커널은 프로세스 A를 깨운다 → ready 상태
+- 리눅스에서는 command를 입력할 때, 입력받는 한 줄이 하나의 프로세스
+  - 즉, shell process 가 하나 떠있는 것
+- command 하나가 실행시키면 자식 프로세스의 형태로 실행되는 것
+  - 부모 프로세스는 blocked 상태이므로 sleep 상태가 됨
+  - e.g. vi 명령어로 editor를 열었을 때 terminal이 block 상태가 되는 것 (또다른 커맨드를 실행하지 못하도록 하고 → 종료되면 또다른 커맨드를 입력할 수 있도록 함)
+  - 부모 프로세스는 자식 프로세스가 종료될 때 까지 wait 상태가 됨
+
+### exit() system call
+
+#### 자발적 종료
+
+- 마지막 statement 수행 후, exit() 시스템 콜을 통해 종료
+- 프로그램에 명시적으로 적어주지 않아도 main 함수가 리턴되는 위치에 컴파일러가 넣어줌
+
+#### 비자발적 종료
+
+- 부모 프로세스가 자식 프로세스를 강제 종료시킴
+  - 자식 프로세스가 한계치를 넘어서는 자원 요청
+  - 자식에게 할당된 태스크가 더이상 필요하지 않음
+- 키보드로 kill, break를 입력한 경우
+- 부모가 종료하는 경우
+  - 부모 프로세스가 종료하기 전에 자식들이 먼저 종료됨
+
+<br/>
+
+## 프로세스간 협력
+
+### 독립적 프로세스(Independent Process)
+
+- 프로세스는 각자의 주소 공간을 가지고 수행되므로 원칙적으로는 하나의 프로세스는 다른 프로세스의 수행에 영향을 미치지 못함
+- 프로세스는 항상 독자적으로 작동됨
+
+### 협력 프로세스(Cooperating Process)
+
+- 프로세스 협력 메커니즘을 통해 하나의 프로세스가 다른 프로세스의 수행에 영향을 미칠 수 있음
+- 경우에 따라서는 프로세스간 협력이 필요함
+- 다른 프로세스의 메모리를 볼 수 없고, 상대 프로세스와 무언가를 주고받지는 못하기에, 아래와 같이 IPC에 따라 정보를 주고받으며 협력함
+
+### 프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)
+
+<p align="center" width="100%"><img width="1010" alt="IPC" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/f9fa2ddb-8fcd-4c6d-909a-d8430741ff7f">
+
+#### (1) Message Passing (메시지 전달 방법)
+
+- 커널을 통해 메시지를 전달
+- 운영체제 커널에 메시지를 전달해서 다른 프로세스가 커널로부터 전달을 받는 방법 사용
+
+##### Message System
+
+- 프로세스 사이에 공유 변수(shared variable)를 일체 사용하지 않고 통신하는 시스템
+
+##### Direct Communication
+
+<p align="center" width="100%"><img width="1010" alt="Direct-Communication" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/7c8374c7-dc57-46ef-863a-e5002d71ccc2">
+
+- 통신하려는 process의 이름을 명시적으로 표시
+- 메시지를 누구한테 보낼지를 명시하여 양자간에 합의된 명시적 메시지 전달 방식
+
+##### Indirect Communication
+
+<p align="center" width="100%"><img width="710" alt="Indirect-Communication" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/d1c4201a-1410-4d5f-963f-e3079cfacd80">
+
+- mailbox (or port)를 통해 메시지를 간접 전달
+- 타겟을 명시하지 않고 전달하면, 협력하는 프로세스 중 하나가 꺼내가도록 하는 방식
+
+#### (2) Shared Memory (주소 공간을 공유하는 방법)
+
+- 서로 다른 프로세스 간에도 일부 주소 공간을 공유하게 하는 shraed memory 메커니즘이 있음
+- 서로 공유 운영체제에게 시스템 콜을 통해 부탁해서 메모리 일부를 공유하겠다고 함 → 메모리를 공유한다는 것은 서로 협력이 가능하다는 뜻
+- 단, 서로 신뢰할 수 있을 때만 공유해야 함
+- 참고) Thread
+  - 스레드는 사실상 하나의 프로세스이므로 프로세스간 협력으로 보기에는 어렵지만, 동일한 프로세스를 구성하는 스레드들간에는 주소 공간을 공유하므로 협력이 가능
