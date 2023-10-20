@@ -11,7 +11,7 @@
 ### 원리
 
 - 프로그램은 실행 파일 형태로 저장되어 있다가
-- 실행하면 해당 프로그램이 memory에 올라가서 process가 됨
+- 실행하면 해당 프로그램이 memory에 올라가서 프로세스가 됨
 - 이때, 운영체제 Kernel은 이미 memory에 올라가 있음
 - 프로그램이 실행될 때 해당 프로그램만의 자신만의 독자적인 Address Space가 → Virtual memory
 - 만약 당장 필요한 부분은 물리적인 memory에 올라감
@@ -67,13 +67,13 @@
 ### 운영체제의 Data
 
 - 현재 실행중인 하드웨어와 모든 프로세스들을 관리하기 위한 자료구조
-- 이것을 PCB(Process Control Block) 라고 함
+- 이것을 PCB(프로세스 Control Block) 라고 함
 
 ### 운영체제의 Stack
 
-- 지금 누가 실행중인지를 알기 위해 process의 kernel stack은 각각 저장됨
+- 지금 누가 실행중인지를 알기 위해 프로세스의 kernel stack은 각각 저장됨
 - 각 프로세스마다 별도의 kernel을 두고 있음
-- 즉, Kernel이 호출되기 전에 어떤 process에서 실행된 것인지에 따라 구분되어 저장되기 때문
+- 즉, Kernel이 호출되기 전에 어떤 프로세스에서 실행된 것인지에 따라 구분되어 저장되기 때문
 - Kernel의 스택이기 때문에 Kernel 함수와 관련됨
 
 <br/>
@@ -84,7 +84,7 @@
 
 ### 사용자 정의 함수
 
-> 해당 process address space 내에 위치
+> 해당 프로세스 address space 내에 위치
 
 - 내가 직접 만든 함수, 자신의 프로그램에서 정의한 함수
 - program counter 값만 바꾸어 다른 위치의 기계어를 실행하면 됨
@@ -92,7 +92,7 @@
 
 ### 라이브러리 함수
 
-> 해당 process address space 내에 위치
+> 해당 프로세스 address space 내에 위치
 
 - 자신의 프로그램에서 정의하지 않고, 가져다 쓴 함수
 - 내가 만든 함수는 아니고 프로그램 안에 집어 넣는 것
@@ -128,12 +128,12 @@
 
 ## 프로세스의 개념
 
-![process](/Images/CS03_process.png)
+![프로세스](/Images/CS03_프로세스.png)
 
 ### 프로세스란?
 
 - 실행중인 프로그램을 뜻함
-- “*Process is a program in execution”*
+- “*프로세스 is a program in execution”*
 
 ### 프로세스의 문맥 (context)
 
@@ -149,22 +149,22 @@
 - program counter 값 → 현재 어디를 실행하고 있는가
 - 각종 Register 값 → Register에 어떤 값을 넣고 있었는가
 
-#### Process의 주소 공간
+#### 프로세스의 주소 공간
 
 > 자신의 메모리 공간에 무엇을 가지고 있는가?
 
 - code, data, stack
 
-### Process 관련 Kernel 자료 구조
+### 프로세스 관련 Kernel 자료 구조
 
-#### PCB(Process Control Block)
+#### PCB(프로세스 Control Block)
 
 - CPU, memory 등을 얼마나 썼는지에 대한 정보를 갖고 있는 자료구조
 - PCB를 봐야 context를 알 수 있기 때문에 프로세스를 관리하기 위한 자료구조라 할 수 있음
 
 #### Kernel Stack
 
-- process마다 다른 kernel stack을 가짐
+- 프로세스마다 다른 kernel stack을 가짐
 
 <br/>
 
@@ -172,7 +172,7 @@
 
 > 프로세스는 상태(state)가 변경되며 수행된다
 
-![process_state](/Images/CS03_process_state.png)
+![프로세스_state](/Images/CS03_프로세스_state.png)
 
 ### Running
 
@@ -186,7 +186,7 @@
 ### Blocked(wait, sleep)
 
 - 오래 걸리는 작업 때문에 CPU를 주어도 당장 instruction을 수행할 수 없는 상태
-- process 자신이 요청한 event(e.g. I/O)가 즉시 만족되지 않아, 이를 기다리는 상태
+- 프로세스 자신이 요청한 event(e.g. I/O)가 즉시 만족되지 않아, 이를 기다리는 상태
 - Inturrupt 되면 진행중이던 event가 완료 되었다는 의미이므로 Ready 상태로 바꿔줌
 - e.g. Disc에서 file을 읽어와야 하는 경우
 
@@ -206,7 +206,7 @@
 
 ## 프로세스의 상태도
 
-![process_state_picture](/Images/CS03_process_state_picture.png)
+![프로세스_state_picture](/Images/CS03_프로세스_state_picture.png)
 
 ### new
 
@@ -228,7 +228,7 @@
 
 ### waiting(blocked)
 
-- 오래 걸리는 작업이 끝나면 (보통 interrupt가 걸림) 해당 process의 상태를 ready로 바꿔서 다시 CPU가 해당 process를 실행할 준비를 시켜둠
+- 오래 걸리는 작업이 끝나면 (보통 interrupt가 걸림) 해당 프로세스의 상태를 ready로 바꿔서 다시 CPU가 해당 프로세스를 실행할 준비를 시켜둠
 
 ### terminated
 
@@ -243,14 +243,14 @@
 
 ### 정의
 
-- 운영체제가 각 process를 관리하기 위해 두는 자료구조
-- process 당 유지하는 정보
+- 운영체제가 각 프로세스를 관리하기 위해 두는 자료구조
+- 프로세스 당 유지하는 정보
 
 ### 구성 요소
 
 - 운영체제가 관리상 사용하는 정보
-  - Process State, Process ID
-  - Scheduling Information, Priority (가장 높은 process에 CPU가 할당됨)
+  - 프로세스 State, 프로세스 ID
+  - Scheduling Information, Priority (가장 높은 프로세스에 CPU가 할당됨)
 - CPU 수행 관련 hardware 값
   - Context Switching에 대비하여 저장해 놓는 값
   - Program Counter, Registers
@@ -267,12 +267,12 @@
 
 ### 정의
 
-- CPU를 한 process에서 다른 process로 넘겨주는 과정
+- CPU를 한 프로세스에서 다른 프로세스로 넘겨주는 과정
 
 ### 필요한 이유
 
 - CPU를 그냥 빼앗아 가는게 아니라, 바로 그 다음 지점을 실행할 수 있도록 현재 프로세스 문맥을 저장해야 함
-- 즉, 만약 CPU가 process A에서 process B로 넘어가게 하려면, 현재 기계어의 어디 실행중인지 등 정보를 CPU 뺏기 전에 process A의 PCB에 저장 후, CPU를 넘겨줌
+- 즉, 만약 CPU가 프로세스 A에서 프로세스 B로 넘어가게 하려면, 현재 기계어의 어디 실행중인지 등 정보를 CPU 뺏기 전에 프로세스 A의 PCB에 저장 후, CPU를 넘겨줌
 
 ### 동작 과정
 
@@ -289,11 +289,11 @@
 
 ### context switch인 것
 
-- 사용자 process A ↔ 사용자 process B
+- 사용자 프로세스 A ↔ 사용자 프로세스 B
 
 ### context switch가 아닌것
 
-- 사용자 process A → 운영체제 → (다시) 사용자 process A
+- 사용자 프로세스 A → 운영체제 → (다시) 사용자 프로세스 A
 
 ### context switch 여부와 overhead 관계
 
@@ -303,7 +303,7 @@
 
 <br/>
 
-## Process를 스케줄링 하기 위한 Queue
+## 프로세스를 스케줄링 하기 위한 Queue
 
 > 프로세스들은 각 queue를 오가며 수행됨
 
@@ -329,11 +329,11 @@
 
 <br/>
 
-## Process 스케줄링 Queue의 모습
+## 프로세스 스케줄링 Queue의 모습
 
-![process_scheduling_queue](/Images/CS03_process_scheduling_queue.png)
+![프로세스_scheduling_queue](/Images/CS03_프로세스_scheduling_queue.png)
 
-- process가 처음에 실행되면 ready queue
+- 프로세스가 처음에 실행되면 ready queue
 - 본인 차례가 되면 CPU를 얻고 쓰다가 언젠가는 종료
 - 쓰다가 오래 기다리는 작업을 요청하면 → I/O queue 가서 줄서고
 - 끝나면 다시 ready queue에서 CPU 얻을 권한 생기고
@@ -400,7 +400,7 @@
 #### e.g. 외부적인 이유
 
 - 사용자가 프로그램을 일시 정지시킨 경우 (by break key, Linux 환경에서 Ctrl+Z)
-- system이 여러 이유로 process를 잠시 중단시킨 경우 (memory에 너무 많은 process가 올라와 경합이 심한 경우) 중기 스케줄러가 여유 공간 마련을 위해 process를 통째로 memory에서 disk로 쫓아냄
+- system이 여러 이유로 프로세스를 잠시 중단시킨 경우 (memory에 너무 많은 프로세스가 올라와 경합이 심한 경우) 중기 스케줄러가 여유 공간 마련을 위해 프로세스를 통째로 memory에서 disk로 쫓아냄
 
 ### Blocked와 Suspended의 차이
 
@@ -436,7 +436,7 @@
 
 > Suspended를 포함한 상태도
 
-![process_status_active_inactive](/Images/CS03_process_status_active_inactive.png)
+![프로세스_status_active_inactive](/Images/CS03_프로세스_status_active_inactive.png)
 
 ### Active / Inactive
 
@@ -487,7 +487,7 @@
 
 ### Running (User mode / Kernel mode)
 
-![process_status_running](/Images/CS03_process_status_running.png)
+![프로세스_status_running](/Images/CS03_프로세스_status_running.png)
 
 #### 중요한 개념
 
@@ -521,16 +521,16 @@
 
 ## Thread
 
-> A thread (or lightweight process) is a basic unit of CPU utilization : CPU 수행 단위
+> A thread (or lightweight 프로세스) is a basic unit of CPU utilization : CPU 수행 단위
 
 ### 설명
 
-- Process에서 CPU 수행에 실행에 필요한 부분만 별도로 가지고 있는 것이 Thread
-- Process는 공유하되, thread는 작업에 따라 각자 가짐
+- 프로세스에서 CPU 수행에 실행에 필요한 부분만 별도로 가지고 있는 것이 Thread
+- 프로세스는 공유하되, thread는 작업에 따라 각자 가짐
 
 ### Thread가 동료 thread와 공유하는 부분 (=task)
 
-> 전통적인 개념의 heavyweight process는 하나의 thread를 가지고 있는 task로 볼 수 있음
+> 전통적인 개념의 heavyweight 프로세스는 하나의 thread를 가지고 있는 task로 볼 수 있음
 
 - code section
 - data section
@@ -544,7 +544,7 @@
 - register set
 - stack space
   - 주소 공간에서는 thread가 함수 호출과 관련된 stack만을 가짐
-  - 그 외에는 process 내에서 다른 thread들과 공유
+  - 그 외에는 프로세스 내에서 다른 thread들과 공유
 
 ### Thread의 효율성
 
@@ -554,10 +554,10 @@
 - 즉, 스레드를 사용함으로써 프로세스 간 통신 및 데이터 공유가 더 효율적으로 이루어질 수 있다는 것을 의미함. 여러 스레드가 같은 프로세스 내에서 작동하며, 프로세스의 메모리 및 자원을 공유하므로 커뮤니케이션 비용이 낮아짐.
 - context switch는 overhead가 큰 편이지만, thread에서 thread로 넘어가는 것은 효율적임
 - 웹 브라우저를 여러 개 띄우면 여러 프로세스가 뜨니 비효율적이므로 스레드를 만드는게 효율적
-- 다만, 크롬 브라우저는 보안 상의 이슈가 있어 여러 개의 프로세스를 띄우며 (Multi-process Architecture) 브라우저마다 구현 방식은 다를 수 있음
+- 다만, 크롬 브라우저는 보안 상의 이슈가 있어 여러 개의 프로세스를 띄우며 (Multi-프로세스 Architecture) 브라우저마다 구현 방식은 다를 수 있음
   - [Chrome for Developers - Inside look at modern web browser (part 1)](https://developer.chrome.com/blog/inside-browser-part1/)
   - [[위 블로그 한국어 번역] 크롬 브라우저는 어떻게 작동 할까? - 01](https://onlydev.tistory.com/80)
-  - [The Chromium Projects - Multi-process Architecture](https://www.chromium.org/developers/design-documents/multi-process-architecture/)
+  - [The Chromium Projects - Multi-프로세스 Architecture](https://www.chromium.org/developers/design-documents/multi-프로세스-architecture/)
 
 ### Thread의 장점
 
@@ -572,17 +572,17 @@
 - 동일 프로세스 내에 있는 스레드들끼리는 CPU 수행 정보를 제외한 대부분의 것들을 공유할 수 있기에 효율적인 자원 공유가 가능
 - 스레드는 같은 프로세스 내에서 실행되므로 프로세스의 code, data, resource를 공유할 수 있음.
 - 이는 자원 공유를 간편하게 만들며, 데이터를 복사하는 등의 overhead를 줄여줌.
-- 즉, 여러 개의 thread는 process의 binary code, data, resource를 공유 가능
+- 즉, 여러 개의 thread는 프로세스의 binary code, data, resource를 공유 가능
 
 #### Economy(경제적)
 
 - 똑같은 일을 프로세스 여러 개 or 프로세스 안에 스레드를 여러 개 두는 것의 차이
-- creating & CPU switching thread (rather than a process)
+- creating & CPU switching thread (rather than a 프로세스)
 - solaris(Oracle가 개발한 다중 스레드 모델)의 경우, 위 두 가지 overhead가 각각 30배, 5배
 
-#### Utilization of Multiprocessor Architectures(병렬성)
+#### Utilization of Multi프로세스or Architectures(병렬성)
 
-- Multiprocessor(CPU가 여러 개 있는 상황)에서는 병렬성 추구 가능
+- Multi프로세스or(CPU가 여러 개 있는 상황)에서는 병렬성 추구 가능
 - 예를 들어 만약, 큰 행렬을 곱셈을 한다 했을 때, CPU가 하나 있으면 한 열씩 순차적으로 해야 하는 상황. CPU가 여러 개 있다면 행렬의 곱셈을 여러 스레드로 나눠서 연산 후, 서로 다른 CPU에 배치하며 연산을 병렬적으로 작업을 수행함 → 효율적
 
 ### 다중 thread 구성의 장점
@@ -611,7 +611,7 @@
 - 운영체제가 이미 스레드의 존재를 모르게 구현하는 것
   - 운영체제가 볼 때는 그저 스레드가 없는 프로세스처럼 보임
 - 운영체제가 thread 간의 CPU를 넘기는 작업을 할 수 없음
-  - process 내부에서 운영체제에 비동기식 I/O를 요청해서 바로 다시 받아 다른 thread로 CPU를 넘기는 등 사용자 프로그램단에서 관리하는 것을 의미
+  - 프로세스 내부에서 운영체제에 비동기식 I/O를 요청해서 바로 다시 받아 다른 thread로 CPU를 넘기는 등 사용자 프로그램단에서 관리하는 것을 의미
 
 <br/>
 
@@ -623,7 +623,7 @@
 
 #### 생성 원리
 
-- 부모 프로세스(parent process)가 자식 프로세스(children process)를 만들면 복제 생성 (프로세스가 또다른 프로세스를 생성)
+- 부모 프로세스(parent 프로세스)가 자식 프로세스(children 프로세스)를 만들면 복제 생성 (프로세스가 또다른 프로세스를 생성)
 - 부모와 똑같은 나이를 가진 프로세스를 생성
 - 즉, 본인이 직접 만드는 것이 아니라, 운영체제에게 system call 요청을 통해 생성 (fork system call)
 - 프로세스의 트리(계층 구조) 형성
@@ -680,13 +680,13 @@
 
 ### fork() system call
 
-- Process는 fork() system call에 의해 생성됨
+- 프로세스는 fork() system call에 의해 생성됨
   - 운영체제에게 자식을 만들어 달라는 함수
   - caller를 복제해 새로운 address space를 생성
 
-### Parent process와 Child process 구분
+### Parent 프로세스와 Child 프로세스 구분
 
-<p align="center" width="100%"><img width="1010" alt="process-end" src="https://github.com/ella-yschoi/TIL/assets/123397411/ecc4b973-846b-4411-b202-723daf57324f">
+<p align="center" width="100%"><img width="1010" alt="프로세스-end" src="https://github.com/ella-yschoi/TIL/assets/123397411/ecc4b973-846b-4411-b202-723daf57324f">
 
 - 부모: PID 값이 0보다 큰 return value로 받게 됨
 - 자식: PID 값을 0으로 return value로 받게 됨
@@ -709,14 +709,14 @@
 <p align="center" width="100%"><img width="1010" alt="wait-systemcall" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/20e424e8-8b68-49ab-9836-b1042bf670d3">
 
 - 프로세스 A가 wait() system call을 호출하면
-  - 커널은 child가 종료될 때까지 프로세스 A를 sleep시킨다 → block 상태
-  - Child process가 종료되면 커널은 프로세스 A를 깨운다 → ready 상태
-- 리눅스에서는 command를 입력할 때, 입력받는 한 줄이 하나의 프로세스
-  - 즉, shell process 가 하나 떠있는 것
-- command 하나가 실행시키면 자식 프로세스의 형태로 실행되는 것
-  - 부모 프로세스는 blocked 상태이므로 sleep 상태가 됨
-  - e.g. vi 명령어로 editor를 열었을 때 terminal이 block 상태가 되는 것 (또다른 커맨드를 실행하지 못하도록 하고 → 종료되면 또다른 커맨드를 입력할 수 있도록 함)
-  - 부모 프로세스는 자식 프로세스가 종료될 때 까지 wait 상태가 됨
+  - 커널은 자식 프로세스가 종료될 때까지 프로세스 A를 sleep시킨다 → blocked 상태
+  - 자식 프로세스가 종료되면 부모가 CPU를 얻고, 커널은 프로세스 A를 깨운다 → ready 상태
+- Linux에서는 command를 입력할 때, 기본적으로 입력받을 수 있는 한 줄이 하나의 프로세스 (Shell)
+  - command 하나가 종료되어야 또다른 command를 입력 가능
+  - command 하나가 실행시키면 자식 프로세스의 형태로 실행되는 것
+- 정리
+  - 부모 프로세스는 자식 프로세스가 종료될 때 까지 blocked 상태로 기다리다가
+  - 자식이 종료되면 다시 깨어나서 일을 할 수 있음
 
 ### exit() system call
 
@@ -738,12 +738,12 @@
 
 ## 프로세스간 협력
 
-### 독립적 프로세스(Independent Process)
+### 독립적 프로세스(Independent 프로세스)
 
 - 프로세스는 각자의 주소 공간을 가지고 수행되므로 원칙적으로는 하나의 프로세스는 다른 프로세스의 수행에 영향을 미치지 못함
 - 프로세스는 항상 독자적으로 작동됨
 
-### 협력 프로세스(Cooperating Process)
+### 협력 프로세스(Cooperating 프로세스)
 
 - 프로세스 협력 메커니즘을 통해 하나의 프로세스가 다른 프로세스의 수행에 영향을 미칠 수 있음
 - 경우에 따라서는 프로세스간 협력이 필요함
@@ -751,7 +751,7 @@
 
 <br/>
 
-## 프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)
+## 프로세스 간 협력 메커니즘 (IPC: Inter프로세스 Communication)
 
 <p align="center" width="100%"><img width="1010" alt="IPC" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/f9fa2ddb-8fcd-4c6d-909a-d8430741ff7f">
 
@@ -765,7 +765,7 @@
 
 #### Direct Communication
 
-통신하려는 process의 이름을 명시적으로 표시하며, 메시지를 누구한테 보낼지를 명시하여 양자간에 합의된 명시적 메시지 전달 방식
+통신하려는 프로세스의 이름을 명시적으로 표시하며, 메시지를 누구한테 보낼지를 명시하여 양자간에 합의된 명시적 메시지 전달 방식
 
 <p align="center" width="100%"><img width="1010" alt="Direct-Communication" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/7c8374c7-dc57-46ef-863a-e5002d71ccc2">
 
