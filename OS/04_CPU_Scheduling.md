@@ -21,7 +21,6 @@
   - CPU를 먼저 주어야 빨리빨리 CPU를 쓰고 나가기 때문
   - 사람과 Interaction하기 때문에 빠른 응답성 제공 필요
   - 쓰고나서 바로 I/O 작업이 이루어지는데, CPU를 못 주고 있으면 CPU도 못 얻을 뿐만 아니라 I/O 도 못할 것이기 때문
-  - 즉, 시스템 안의 자원들이 골고루 사용되기 위해서
 
 <br/>
 
@@ -35,7 +34,7 @@
 
 ### I/O-bound process
 
-- CPU를 길게 쓰고, I/O를 짧게 쓰는 작업
+- CPU를 짧게 쓰고, I/O를 길게 쓰는 작업
 - CPU를 잡고 계산하는 시간보다 I/O에 많은 시간이 필요한 경우 (과학적 연산 등)
 - many & short CPU bursts
 
@@ -47,7 +46,7 @@
 
 ### CPU 스케줄러
 
-- Ready 상태의 프로세스 중에서 이번에 CPU를 어떤 프로세스에게 줄 지 고르는 역할
+- Ready 상태의 프로세스 중에서 이번에 CPU를 어떤 프로세스에게 줄지 고르는 역할
 
 ### Dispatcher
 
@@ -57,7 +56,7 @@
 
 ### CPU 스케줄링이 필요한 경우
 
-프로세스에게 다음과 같은 상태 변화가 있는 경우
+프로세스에게 아래와 같은 상태 변화가 있는 경우
 
 1. Running → Blocked (e.g. I/O 요청하는 시스템 콜)
 2. Running → Ready (e.g. 할당시간만료로 timer interrupt)
@@ -65,7 +64,7 @@
 4. Terminate
 
 - 1, 4 에서의 스케줄링은 nonpreemptive (= 강제로 빼앗지 않고 자진 반납)
-- 그 외 다른 스케줄링은 preemptive (= 강제로 빼앗음)
+- 그 외 다른 스케줄링은 preemptive (= 정책상 다른 것들도 번갈아 CPU 사용해야 하기에 강제로 빼앗음)
 
 <br/>
 
@@ -89,8 +88,6 @@
 
 - amount of time to execute a particular process
 - CPU burst를 하고 나서, I/O burst를 하러 나가기까지 전체 시간
-  - ready queue에서 기다린 시간 + 실제로 CPU를 쓴 시간
-  - CPU burst에 들어와서 I/O하러 다시 나갈때까지 걸린 시간
 - Ready Queue에서 CPU를 기다린 시간 + 실제로 CPU를 사용한 시간
 - e.g. 밥먹은 시간 + 대기시간 다 합친 시간
 
