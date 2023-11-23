@@ -177,3 +177,41 @@
 - 즉, 프로그램이라는 게 순차적으로 진행되기보단 if문 등 그때그때 상황이 다르기 때문
 - 그렇다면 다음번 CPU burst time을 어떻게 알 수 있을까?
 - CPU burst를 알 수 없다면 과거의 CPU burst time을 기반으로 추정은 가능
+
+<br/>
+
+## 7. Priority Scheduling
+
+> A priority number (integer) is associated with each process
+
+### 특징
+
+- highest priority(smallest integer)를 가진 프로세스에게 CPU 할당
+- preemptive: 우선순위가 더 높으면 빼앗아서 줌
+- nonpreemptive: 빼앗지 않고 기다림
+- SJF는 일종의 priority scheduling
+
+### 문제점
+
+- Starvation: low priority processes may never execute
+
+### 해결책
+
+- Aging: as time progresses increase the priority of the process
+- 경로우대 같은 개념
+
+<br/>
+
+## 8. Round Robin
+
+### 특징
+
+- 각 프로세스는 동일한 크기의 할당 시간(time quantum)을 가짐
+- 할당 시간이 지나면 프로세스는 선점(preempted) 당하고, ready queue의 제일 뒤에 가서 다시 줄을 선다
+- n개의 프로세스가 ready queue에 있고, 할당 시간이 q time unit인 경우, 각 프로세스는 최대 q time unit 단위로 CPU 시간의 1/n을 얻는다.
+- 즉, 어떠한 프로세스도 (n-1) q time unit 이상 기다리지 않는다.
+
+### Performance
+
+- 할당 시간이 너무 길면 → FCFS
+- 할당 시간이 너무 짧으면 → context switch가 너무 빈번하게 일어남
