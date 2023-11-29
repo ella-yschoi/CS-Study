@@ -215,3 +215,97 @@
 
 - 할당 시간이 너무 길면 → FCFS
 - 할당 시간이 너무 짧으면 → context switch가 너무 빈번하게 일어남
+
+<br/>
+
+## 9. Multilevel Queue
+
+> Ready queue를 여러 개로 분할
+
+<p align="center" width="100%"><img width="1010" alt="image" src="https://github.com/ella-yschoi/TIL/assets/123397411/f801abd8-bfdd-4455-9d49-54465a7d7778">
+
+### (1) Ready queue를 여러 개로 분할
+
+- foreground: interactive
+- background: batch - no human interaction
+
+### (2) 각 queue는 독립적인 스케줄링 알고리즘을 가짐
+
+- foreground: Round Robin
+- background: FCFS (긴 프로세스 하나가 context switch 없이 쭉 실행)
+- Queue에 대한 스케줄링이 필요 (각 queue 마다 wait을 주는 것)
+
+### (3) Fixed priority scheduling
+
+- serve all from foreground then from background
+- starvation의 가능성이 있음
+
+### (4) Time slice
+
+- 각 queue에 CPU time을 적절한 비율로 할당
+- e.g. 80% to foreground in RR, 20% to background in FCFS
+- foreground에 우선순위를 주는데 무조건 주는건 아니고, 각 큐마다 시간의 weight를 주는 것
+
+<br/>
+
+## 10. Multilevel Feedback Queue
+
+<p align="center" width="100%"><img width="1010" alt="image" src="https://github.com/ella-yschoi/TIL/assets/123397411/93ec9f6a-fee8-430c-977f-ac8bd1bf4eb0">
+
+### (1) 특징
+
+- 줄 간의 이동이 가능
+- 한번 정해진 queue는 바뀌지 않음
+- Process가 다른 queue로 이동 가능
+- 상위 queue가 우선순위가 높다
+- 상위 queue가 비어야 하위 queue가 채워짐
+- aging을 이와 같은 방식으로 구현 가능
+
+### (2) Multilevel Feedback Queue Scheduler를 정의하는 파라미터들
+
+- Queue의 수
+- 각 queue의 scheduling algorithm
+- 프로세스를 상위 queue로 보내는 기준
+- 프로세스를 하위 queue로 보내는 기준
+- 프로세스가 CPU 서비스를 받으려 할 때 들어갈 queue를 결정하는 기준
+
+<br/>
+
+## 11. Example of Multilevel Feedback Queue
+
+### (1) Three queues
+
+- Q0 - time quantum 8 milliseconds
+- Q1 - time quantum 16 milliseconds
+- Q2 - FCFS
+
+### (2) Scheduling
+
+- new job이 queue Q0로 들어감
+- 8ms 동안 다 끝내지 못했으면 queue Q1으로 내려감
+- Q1에 줄서서 기다렸다가 CPU를 잡아서 16ms 동안 수행됨
+- 16ms 안에 끝내지 못한 경우 queue Q2로 쫓겨남
+
+<br/>
+
+## 12. Multiple-Processor Scheduling
+
+> CPU가 여러 개인 경우, 스케줄링은 더욱 복잡해짐
+
+### (1) Homogeneous processor인 경우
+
+- Queue에 한 줄로 세워서 각 프로세서가 알아서 꺼내가게 할 수 있음
+- 반드시 특정 프로세서에서 수행되어야 하는 프로세스가 있는 경우에는 문제가 더 복잡해짐
+
+### (2) Load Sharing
+
+- 일부 프로세서에 job이 몰리지 않도록 부하를 적절히 공유하는 메커니즘 필요
+- 별개의 queue를 두는 방법 vs. 공동의 queue를 사용하는 방법
+
+### (3) Symmetric Multiprocessing (SMP)
+
+- 각 프로세서가 각자 알아서 스케줄링 결정
+
+### (4) Asymmetric Multiprocessing
+
+- 하나의 프로세서가 시스템 데이터의 접근과 공유를 책임지고 나머지 프로세서는 거기에 따름
