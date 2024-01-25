@@ -126,6 +126,64 @@
 
 <br/>
 
-## 7. Initial Attempts to solve problem
+## 7. Attempts to solve problem
+
+### (1) Initial Attempts to solve problem
 
 <p align="left" width="100%"><img width="800" alt="Initial Attempts to solve problem" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/b8fe2787-ee3b-42bf-889c-f99b4b15402f">
+
+critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 코드(entry section)와 빠져갈 때 코드(exit section)를 추가해서 동시 접속을 막는 방법이 있음
+
+### (2) 프로그램적 해결법의 충족 조건
+
+> 가정 1. 모든 프로세스의 수행 속도는 0보다 크다.
+> 가정 2. 프로세스들 간의 상대적인 수행 속도는 가정하지 않는다.
+
+#### a. Mutual Exclusion (상호 배제)
+
+- 동시에 들어가면 안된다는 조건
+- 프로세스 Pi가 critical section 부분을 수행 중이면 다른 모든 프로세스들은 그들의 critical section에 들어가면 안 된다.
+
+#### b. Progress (진행)
+
+- 들어가고 싶은데 못 들어가는 조건
+- 아무도 critical section에 있지 않은 상태에서 critical section에 들어가고자 하는 프로세스가 있다면 critical section에 들어가게 해주어야 한다.
+
+#### c. Bounded Waiting (유한 대기)
+
+- 기다리는 시간이 유한해야 하는 조건 (starvation 막아야)
+- 프로세스가 critical section에 들어가려고 요청한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 critical section에 들어가는 횟수에 한계가 있어야 한다.
+
+### (3) 동시 접속을 막기 위한 알고리즘 1
+
+<p align="left" width="100%"><img width="800" alt="동시 접속을 막기 위한 알고리즘 1" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/0987a3a2-c218-4245-85e4-1c56bff58db6">
+
+- 만약 지금이 내 차례가 아니라면 while 문에서 계속 기다리다가 → 만약 turn이 0이면(내 차례면) critical section에 들어감 → 그리고 다 쓰고 나갈 때 turn을 1로 바꾸어 준다.
+- 즉, critical section에 들어가기 전에 이번이 내 차례인지 체크해서 → 내 차례가 아니면 기다리고, 맞으면 critical section에 들어가서 공유코드를 실행하고 → 끝나면 상대방 들어갈 수 있게 상대방 코드로 바꾸어 줌
+- 제대로 돌아갈까? 일단 둘이 동시에 critical section에 들어가는 경우는 생기지 않을 것
+- 하지만 엄격하게 critical section에 번갈아 들어가도록 하게 되어 있으므로 들어가고 싶어도 못 들어가게 되어 있음
+- 즉, 동시에 들어가는 문제는 해결되지만, 나는 여러 번 들어가고 싶고 상대방은 들어가고 싶지 않다고 가정한다면 나는 여러 번 들어가지를 못하는 문제 발생 → 과잉 양보 문제
+
+### (4) 동시 접속을 막기 위한 알고리즘 2
+
+<p align="left" width="100%"><img width="800" alt="동시 접속을 막기 위한 알고리즘 2" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/03ad06e8-9ddc-4a73-81f8-b5e87273f724">
+
+- ⛳ flag를 둔다는 알고리즘: 프로세스마다 각자 자신만의 깃발이 있기에 critical section에 들어가고 싶으면 자신의 깃발을 든다.
+- 한 프로세스가 critical section에 들어가고 싶다는 의사를 표시: flag[i] = true; → 상대방의 깃발이 내려져 있는지 확인 → 들려져 있다면 안 들어감 → 내려져 있다면 critical section에 들어가기 → 다 썼다면 깃발을 내려서 상대방을 들어오게 하기: flag[i] = false;
+- 일단 동시에 들어가는 문제는 해결이 되나, 모두 다 깃발을 들어 놓고 눈치만 보다가 들어가지 못하는 상황이 발생하기에 위에서 언급한 2. Progress (진행) 상황 발생
+
+### (5) 동시 접속을 막기 위한 알고리즘 3
+
+<p align="left" width="100%"><img width="800" alt="동시 접속을 막기 위한 알고리즘 3" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/6c633233-3e53-4d15-b02a-4a17248f8c44">
+
+- 앞의 2개 변수를 모두 사용함 (깃발 들기 & 깃발을 확인하는 절차)
+- 추가로, 동시에 깃발을 들었다면 turn을 이용해서 니 차례냐 내 차례냐를 정하는 것
+- critical section에 들어가기 전 의사표현 flag[i] = true;→ turn을 상대방 turn으로 만들어 둠: turn = j; → 그 다음에 상대방 깃발이 들려있는지 && turn이 상대방꺼인지 확인: while문; → 다 쓰고 나올 때는 상대방이 쓸 수 있게 깃발을 내려주고 감 flag[i] = false;
+- 하지만 여전히 문제가 있음: busy waiting ( = spin lock) 비효율적임. 만약 내가 while문에 계속 걸려서 critical section에 들어가지 못하는 상황이라면 CPU와 메모리를 계속 쓰면서 기다리고 있는 상황
+
+### (6) Synchronization Hardware
+
+<p align="left" width="100%"><img width="800" alt="Synchronization Hardware" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/e579ad52-894b-4605-b3d7-b544ff9d837c">
+
+- 하드웨어적으로 원자적으로 즉, 중간에 CPU를 빼앗기거나 쪼개지지 않고 데이터를 바꾸고 저장하는 것을 반드시 ‘한꺼번에’ 실행하도록 함 → Test and Set이 지원되면 해결 가능 (1. Read + 2. TRUE 로 전환)
+- a 라는 변수를 읽어가고 + 읽힌 a 라는 변수를 1로 만들고 ⇒ 이 과정을 atomic하게 한번에 만드는 과정이 지원 되면 위에서 언급한 복잡한 알고리즘들 필요 없이 가능
