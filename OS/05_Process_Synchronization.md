@@ -2,7 +2,7 @@
 
 ## 1. 컴퓨터의 연산
 
-<p align="left" width="100%"><img width="800" alt="컴퓨터의 연산" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/42000663-94c1-4bc0-b8b7-75f6e1840946">
+<p align="left" width="100%"><img width="1000" alt="컴퓨터의 연산" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/42000663-94c1-4bc0-b8b7-75f6e1840946">
 
 - 컴퓨터에서 연산을 할 때는 항상 데이터를 읽어와서 연산 → 그 결과를 다시 어딘가에 저장하도록 되어 있음
 - 메모리에 있는 데이터를 읽어와서 CPU에서 연산을 하면 다시 데이터를 가져다가 메모리에서 사용하는 원리
@@ -12,7 +12,7 @@
 
 ## 2. Race Condition
 
-<p align="left" width="100%"><img width="800" alt="Race Condition이란" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/1820b341-e4e6-4387-93a4-5d9432b601d8">
+<p align="left" width="100%"><img width="1000" alt="Race Condition이란" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/1820b341-e4e6-4387-93a4-5d9432b601d8">
 
 ### (1) 문제의 발생
 
@@ -48,7 +48,7 @@
 
 ### (1) 문제의 발생
 
-<p align="left" width="100%"><img width="800" alt="Race Condition" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/a0f9ae90-96b3-483b-9bff-03a4ae465d4f">
+<p align="left" width="100%"><img width="1000" alt="Race Condition" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/a0f9ae90-96b3-483b-9bff-03a4ae465d4f">
 
 - 프로그램 A가 user mode에서 본인의 코드를 실행할 때는 어차피 본인의 주소 공간의 데이터에 접근할테니 문제가 없음
 - 그런데 system call을 통해 커널의 코드가 실행될 때는 커널의 데이터를 건드리는데, 커널의 데이터는 프로세스 입장에서는 일종의 **공유 데이터**라고 볼 수 있음
@@ -56,14 +56,14 @@
 
 ### (2) 해결책
 
-<p align="left" width="100%"><img width="800" alt="Race Condition 해결책" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/58de6d59-3832-4795-941b-eb0bdd631d7c">
+<p align="left" width="100%"><img width="1000" alt="Race Condition 해결책" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/58de6d59-3832-4795-941b-eb0bdd631d7c">
 
 - kernel mode에서 ‘수행 중’일 때는 CPU를 preempt 하지 않음 (빼앗지 않음)
 - kernel mode에서 user mode로 돌아갈 ‘때’ preempt 하기
 
 ### (3) OS에서의 Race Condition (interrupt handler vs. kernel)
 
-<p align="left" width="100%"><img width="800" alt="OS에서의 Race Condition (interrupt handler vs. kernel)" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/b09ed6ff-37d5-42a5-821b-105ac1ea6e36">
+<p align="left" width="100%"><img width="1000" alt="OS에서의 Race Condition (interrupt handler vs. kernel)" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/b09ed6ff-37d5-42a5-821b-105ac1ea6e36">
 
 - interrupt가 들어오면 현재의 문맥을 처리하고 → 그 다음에 interrupt 처리 루틴으로 돌아가서 그 작업을 먼저 하고 → 다시 돌아오기
 - 결국 변수를 건드리기 전에 (real time system이 아닌 이상) interrupt를 disable 시키고 → 작업이 다 끝나면 enable 시키면서 해결하면 됨
@@ -71,7 +71,7 @@
 
 ### (4) OS에서의 Race Condition (multi-processor)
 
-<p align="left" width="100%"><img width="800" alt="OS에서의 Race Condition (multi-processor)" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/51aff8e3-47f0-482c-acd1-457f788f0d8b">
+<p align="left" width="100%"><img width="1000" alt="OS에서의 Race Condition (multi-processor)" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/51aff8e3-47f0-482c-acd1-457f788f0d8b">
 
 #### a. 방법 1
 
@@ -108,7 +108,7 @@
 
 ## 5. Example of a Race Condition
 
-<p align="left" width="100%"><img width="800" alt="Example of a Race Condition" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/0de20292-283c-4ea5-b701-dc9fee819b8e">
+<p align="left" width="100%"><img width="1000" alt="Example of a Race Condition" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/0de20292-283c-4ea5-b701-dc9fee819b8e">
 
 - 사용자 프로세서 P1 수행 중, timer interrupt가 발생해서 context switch가 일어나서 P2가 CPU를 잡으면?
 - 이 작업을 하는 ‘도중에’ 쪼개져서 CPU가 다른 프로세스에게 넘어가게 되는 게 문제임
@@ -118,7 +118,7 @@
 
 ## 6. The Critical-Section Problem
 
-<p align="left" width="100%"><img width="800" alt="The Critical-Section Problem" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/61854ede-f797-4ee6-89b0-bde9acafdf43">
+<p align="left" width="100%"><img width="1000" alt="The Critical-Section Problem" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/61854ede-f797-4ee6-89b0-bde9acafdf43">
 
 - n개의 프로세스가 공유 데이터를 동시에 사용하기를 원하는 경우
 - 각 프로세스의 code segment에는 공유 데이터를 접근하는 코드인 critical section이 존재 (공유 데이터가 critical section이 아니라, 공유데이터를 각각의 프로세스가 접근하는 코드)
@@ -130,7 +130,7 @@
 
 ### (1) Initial Attempts to solve problem
 
-<p align="left" width="100%"><img width="800" alt="Initial Attempts to solve problem" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/b8fe2787-ee3b-42bf-889c-f99b4b15402f">
+<p align="left" width="100%"><img width="1000" alt="Initial Attempts to solve problem" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/b8fe2787-ee3b-42bf-889c-f99b4b15402f">
 
 critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 코드(entry section)와 빠져갈 때 코드(exit section)를 추가해서 동시 접속을 막는 방법이 있음
 
@@ -156,7 +156,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 ### (3) 동시 접속을 막기 위한 알고리즘 1
 
-<p align="left" width="100%"><img width="800" alt="동시 접속을 막기 위한 알고리즘 1" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/0987a3a2-c218-4245-85e4-1c56bff58db6">
+<p align="left" width="100%"><img width="1000" alt="동시 접속을 막기 위한 알고리즘 1" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/0987a3a2-c218-4245-85e4-1c56bff58db6">
 
 - 만약 지금이 내 차례가 아니라면 while 문에서 계속 기다리다가 → 만약 turn이 0이면(내 차례면) critical section에 들어감 → 그리고 다 쓰고 나갈 때 turn을 1로 바꾸어 준다.
 - 즉, critical section에 들어가기 전에 이번이 내 차례인지 체크해서 → 내 차례가 아니면 기다리고, 맞으면 critical section에 들어가서 공유코드를 실행하고 → 끝나면 상대방 들어갈 수 있게 상대방 코드로 바꾸어 줌
@@ -166,7 +166,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 ### (4) 동시 접속을 막기 위한 알고리즘 2
 
-<p align="left" width="100%"><img width="800" alt="동시 접속을 막기 위한 알고리즘 2" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/03ad06e8-9ddc-4a73-81f8-b5e87273f724">
+<p align="left" width="100%"><img width="1000" alt="동시 접속을 막기 위한 알고리즘 2" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/03ad06e8-9ddc-4a73-81f8-b5e87273f724">
 
 - ⛳ flag를 둔다는 알고리즘: 프로세스마다 각자 자신만의 깃발이 있기에 critical section에 들어가고 싶으면 자신의 깃발을 든다.
 - 한 프로세스가 critical section에 들어가고 싶다는 의사를 표시: flag[i] = true; → 상대방의 깃발이 내려져 있는지 확인 → 들려져 있다면 안 들어감 → 내려져 있다면 critical section에 들어가기 → 다 썼다면 깃발을 내려서 상대방을 들어오게 하기: flag[i] = false;
@@ -174,7 +174,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 ### (5) 동시 접속을 막기 위한 알고리즘 3
 
-<p align="left" width="100%"><img width="800" alt="동시 접속을 막기 위한 알고리즘 3" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/6c633233-3e53-4d15-b02a-4a17248f8c44">
+<p align="left" width="100%"><img width="1000" alt="동시 접속을 막기 위한 알고리즘 3" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/6c633233-3e53-4d15-b02a-4a17248f8c44">
 
 - 앞의 2개 변수를 모두 사용함 (깃발 들기 & 깃발을 확인하는 절차)
 - 추가로, 동시에 깃발을 들었다면 turn을 이용해서 니 차례냐 내 차례냐를 정하는 것
@@ -183,7 +183,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 ### (6) Synchronization Hardware
 
-<p align="left" width="100%"><img width="800" alt="Synchronization Hardware" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/e579ad52-894b-4605-b3d7-b544ff9d837c">
+<p align="left" width="100%"><img width="1000" alt="Synchronization Hardware" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/e579ad52-894b-4605-b3d7-b544ff9d837c">
 
 - 하드웨어적으로 원자적으로 즉, 중간에 CPU를 빼앗기거나 쪼개지지 않고 데이터를 바꾸고 저장하는 것을 반드시 ‘한꺼번에’ 실행하도록 함 → Test and Set이 지원되면 해결 가능 (1. Read + 2. TRUE 로 전환)
 - a 라는 변수를 읽어가고 + 읽힌 a 라는 변수를 1로 만들고 ⇒ 이 과정을 atomic하게 한번에 만드는 과정이 지원 되면 위에서 언급한 복잡한 알고리즘들 필요 없이 가능
@@ -196,7 +196,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 > Semaphore 개념을 쉽게 설명하는 글: [뮤텍스(Mutex)와 세마포어(Semaphore)의 차이](https://worthpreading.tistory.com/90)
 
-<p align="left" width="100%"><img width="800" alt="Semaphore" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/87875110-ad0b-4598-8eb4-f25117e214e0">
+<p align="left" width="100%"><img width="1000" alt="Semaphore" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/87875110-ad0b-4598-8eb4-f25117e214e0">
 
 - 일종의 추상 자료형이며 앞의 방식들을 추상화시킴
 - 사용 목적: 자원은 공유자원이기 때문에 동시에 접근하면 문제를 생김. 이를 막기 위해 semaphore를 쓰면서 자원의 획득과 반납을 관리하는 것임
@@ -214,7 +214,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 ### (2) Critical Section of n Processes
 
-<p align="left" width="100%"><img width="800" alt="Critical Section of n Processes" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/321a1661-4369-429e-ab7c-b8c8c334c764">
+<p align="left" width="100%"><img width="1000" alt="Critical Section of n Processes" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/321a1661-4369-429e-ab7c-b8c8c334c764">
 
 - critical section 들어가기 전에 P 연산 → 빠져 나올 때는 V 연산을 해서 다시 값을 복원시켜준다.
 - 참고로 mutex란, ‘상호 배제’ 라는 뜻으로 동시 프로그래밍에서 공유 불가능한 자원의 동시 사용을 피하기 위해 사용되는 알고리즘이다. 임계 구역(critical section)으로 불리는 코드 영역에 의해 구현된다. ([출처: 위키백과](https://ko.wikipedia.org/wiki/%EC%83%81%ED%98%B8_%EB%B0%B0%EC%A0%9C))
@@ -227,7 +227,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 ### (4) Block & Wakeup Implementation
 
-<p align="left" width="100%"><img width="800" alt="Block & Wakeup Implementation" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/a7c9cec0-199a-451c-92c6-69ddd7e8c225">
+<p align="left" width="100%"><img width="1000" alt="Block & Wakeup Implementation" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/a7c9cec0-199a-451c-92c6-69ddd7e8c225">
 
 - value가 하나 있고, semaphore를 줄 세워서 변수 L에 대해 프로세스들을 blocked : 줄을 세워 기다리게 함 (process wait queue)
 - 누군가 semaphore를 쓰고 있고 V 연산을 통해 뱉어낸다면 → 줄 세워있는 프로세스들을 깨워주면 됨
@@ -236,7 +236,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 > Semaphore 연산이 다음과 같이 정의됨 (앞의 코드와는 다르게 현재 자원이 얼마나 남아있는지는 알기 어려운 코드임)
 
-<p align="left" width="100%"><img width="800" alt="Implementation" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/5782c15b-77da-4b76-97da-c4a5cea56938">
+<p align="left" width="100%"><img width="1000" alt="Implementation" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/5782c15b-77da-4b76-97da-c4a5cea56938">
 
 #### P 연산 시 일단 S value를 1을 뺀다
 
