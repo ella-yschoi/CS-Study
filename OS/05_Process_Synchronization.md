@@ -136,7 +136,7 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 ### (2) 프로그램적 해결법의 충족 조건
 
-> 가정 1. 모든 프로세스의 수행 속도는 0보다 크다.
+> 가정 1. 모든 프로세스의 수행 속도는 0보다 크다.<br/>
 > 가정 2. 프로세스들 간의 상대적인 수행 속도는 가정하지 않는다.
 
 #### a. Mutual Exclusion (상호 배제)
@@ -187,3 +187,91 @@ critical section에 동시 접속 시 문제가 생기기에 들어갈 때의 �
 
 - 하드웨어적으로 원자적으로 즉, 중간에 CPU를 빼앗기거나 쪼개지지 않고 데이터를 바꾸고 저장하는 것을 반드시 ‘한꺼번에’ 실행하도록 함 → Test and Set이 지원되면 해결 가능 (1. Read + 2. TRUE 로 전환)
 - a 라는 변수를 읽어가고 + 읽힌 a 라는 변수를 1로 만들고 ⇒ 이 과정을 atomic하게 한번에 만드는 과정이 지원 되면 위에서 언급한 복잡한 알고리즘들 필요 없이 가능
+
+<br/>
+
+## 8. Semaphores
+
+### (1) Semaphore란?
+
+> Semaphore 개념을 쉽게 설명하는 글: [뮤텍스(Mutex)와 세마포어(Semaphore)의 차이](https://worthpreading.tistory.com/90)
+
+<p align="left" width="100%"><img width="800" alt="Semaphore" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/87875110-ad0b-4598-8eb4-f25117e214e0">
+
+- 일종의 추상 자료형이며 앞의 방식들을 추상화시킴
+- 사용 목적: 자원은 공유자원이기 때문에 동시에 접근하면 문제를 생김. 이를 막기 위해 semaphore를 쓰면서 자원의 획득과 반납을 관리하는 것임
+- 변수 값 S는 정수(jnteger)로 정의되며, atomic한 P 연산과 V 연산 두 가지로 표현됨
+
+#### P 연산
+
+- 자원을 획득하는 과정 (== lock을 거는 과정)
+- 자원을 카운팅하는 변수 S가 0 이하의 값이면 (없으면) while문에서 기다리고, 여분이 있다면 - - 시켜서 자원을 쓰는 코드 수행
+
+#### V 연산
+
+- 자원을 반납하는 과정 (== lock을 푸는 과정)
+- S ++로 자원을 내놓았다는 의미
+
+### (2) Critical Section of n Processes
+
+<p align="left" width="100%"><img width="800" alt="Critical Section of n Processes" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/321a1661-4369-429e-ab7c-b8c8c334c764">
+
+- critical section 들어가기 전에 P 연산 → 빠져 나올 때는 V 연산을 해서 다시 값을 복원시켜준다.
+- 참고로 mutex란, ‘상호 배제’ 라는 뜻으로 동시 프로그래밍에서 공유 불가능한 자원의 동시 사용을 피하기 위해 사용되는 알고리즘이다. 임계 구역(critical section)으로 불리는 코드 영역에 의해 구현된다. ([출처: 위키백과](https://ko.wikipedia.org/wiki/%EC%83%81%ED%98%B8_%EB%B0%B0%EC%A0%9C))
+
+### (3) Semaphore를 정의하는 방법
+
+- P 연산을 본인이 계속 해봐야 0인 상태에서 while문을 쓸데없이 도는 문제 → busy waiting
+- 만약 누군가가 critical section에 들어가서 이미 semaphore 변수를 체크하고 있으면 CPU를 아예 반납해서 blocked → 누군가가 semaphore V 연산을 해줄 때까지 CPU를 얻지 않는게 더 효율적임
+- 따라서 busy waiting 방법 말고, `block & waiting` 방식으로 하면 더 효율적
+
+### (4) Block & Wakeup Implementation
+
+<p align="left" width="100%"><img width="800" alt="Block & Wakeup Implementation" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/a7c9cec0-199a-451c-92c6-69ddd7e8c225">
+
+- value가 하나 있고, semaphore를 줄 세워서 변수 L에 대해 프로세스들을 blocked : 줄을 세워 기다리게 함 (process wait queue)
+- 누군가 semaphore를 쓰고 있고 V 연산을 통해 뱉어낸다면 → 줄 세워있는 프로세스들을 깨워주면 됨
+
+### (5) Implementation
+
+> Semaphore 연산이 다음과 같이 정의됨 (앞의 코드와는 다르게 현재 자원이 얼마나 남아있는지는 알기 어려운 코드임)
+
+<p align="left" width="100%"><img width="800" alt="Implementation" src="https://github.com/ella-yschoi/CS-Study/assets/123397411/5782c15b-77da-4b76-97da-c4a5cea56938">
+
+#### P 연산 시 일단 S value를 1을 뺀다
+
+- 이미 semaphore 자원이 모두 다 사용 중이기에 0이라도 1을 뺀다 (심지어 음수일지라도)
+- 이미 누군가가 쓰고 있어 음수면 → 여분이 없다 → Semaphore L (리스트)에 block 시켜서 잠들게 함
+
+#### 언제 깨어나나?
+
+- 누군가가 V 연산을 해서 자원을 내어 놓을 때 S value 1 증가 → 자원을 반납했더라도 꼭 양수가 된다는 보장은 없다
+
+#### value에 따른 상황
+
+- 만약 음수다? → Semaphore를 기다리면서 block 되어 잠들어 있는 상황
+- 만약 양수다? → Semaphore가 남아돌아서 어느 누구도 쓰고 있지 않은 상황
+
+### (6) Busy-waiting vs. Block/Wake up
+
+- 일반적으로 Block/Wake up 방식이 더 좋음 (특히 여분이 없는데 쓸데없이 CPU를 쓰면서 기다리는 busy-wait 보다는 낫기 때문)
+- critical section의 길이가 긴 경우 (여분이 없을 때)
+  - Block/Wake up이 적당함
+- critical section의 길이가 매우 짧은 경우 (critical section에 들어가는게 생각보다 엄청 빈번하지 않아 경쟁이 심하지 않다면)
+  - 오히려 Block/Wake up 오버헤드가 busy-wait 오버헤드보다 더 커질 수 있음
+  - 따라서 그냥 busy waiting 하는게 더 효율적일 수 도
+- 여분이 생길 때는 Block/Wake up 방식이 더 낫지만, 어떻게 보면 오버헤드라고 볼 수 있음
+
+### (7) Two Types of Semaphores
+
+#### Counting Semaphore
+
+- Counting: 자원이 여러 개 있을 때는 카운팅이 중요하기에 이렇게 부름
+- 도메인이 0 이상인 임의의 정수 값
+- 주로 resource counting에 사용
+
+#### Binaray Semaphore
+
+- Binaray: 값이 0 또는 1인 경우로 동시 접속을 못하게 mutual exclustion 를 위해 사용됨
+- 락을 걸고 락을 푸는 용도 (양 쪽 다 쓸수 있다는 의미)
+- 주로 mutual exclustion (lock/unlock)에 사용
